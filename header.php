@@ -8,7 +8,7 @@ if( !isset($_SESSION['user']) ) {
  exit;
 }
 // select logged-in users details
-$res=mysqli_query($conn, "SELECT * FROM user, user_role WHERE userID=".$_SESSION['user']);
+$res=mysqli_query($conn, "SELECT * FROM user WHERE userID=".$_SESSION['user']);
 $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
 
  ?>
@@ -66,7 +66,7 @@ $userRow=mysqli_fetch_array($res, MYSQLI_ASSOC);
 <ul>
 <?php
         if (isset($_SESSION['user'])) {
-          $displayRole = $userRow['user_role'];
+          $displayRole = $userRow['fk_user_roleID'];
           echo "User_role ", ": ", $displayRole, "  ";
         }
 ?>
