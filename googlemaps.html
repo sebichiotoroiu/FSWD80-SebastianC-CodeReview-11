@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      #map {
+        height: 500px;
+        width: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+        <script>
+          function initMap() {
+            var myLatlng = {lat: 48.1964416, lng: 16.359398};
+
+            // Create a new StyledMapType object, passing it an array of styles,
+            // and the name to be displayed on the map type control.
+           
+            // Create a map object, and include the MapTypeId to add
+            // to the map type control.
+            var map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat: 48.1964416, lng: 16.359398},
+              zoom: 10,
+              center: myLatlng,
+              mapTypeControlOptions: {
+                mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+                        'styled_map']
+              }
+            });
+
+            var marker = new google.maps.Marker({
+                      position: myLatlng,
+                      map: map,
+                      title: 'Click to zoom'
+                    });
+
+            //Associate the styled map with the MapTypeId and set it to display.
+            map.mapTypes.set('styled_map', styledMapType);
+            map.setMapTypeId('styled_map');
+          map.addListener('center_changed', function() {
+                   // 3 seconds after the center of the map has changed, pan back to the
+                   // marker.
+                   window.setTimeout(function() {
+                     map.panTo(marker.getPosition());
+                   }, 3000);
+                 });
+
+                 marker.addListener('click', function() {
+                   map.setZoom(18);
+                   map.setCenter(marker.getPosition());
+                 });
+          }
+        </script>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtjaD-saUZQ47PbxigOg25cvuO6_SuX3M&callback=initMap">
+        </script>
+  </body>
+</html>
